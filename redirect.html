@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NB Freelancer Team</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NB Freelancer Team</title>
 </head>
-
 <body>
 
 <script>
-    const LINK_ONE = "https://rb.gy/wkpsot";
-    const LINK_TWO = "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+const LINK_ONE = "https://rb.gy/wkpsot";
+const LINK_TWO = "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
 
-    // Open Link 1 first
-    window.location.replace(LINK_ONE);
+window.location.href = LINK_ONE;
 
-    // NOTE:
-    // Once Link 1 opens as a full page, this GitHub page is unloaded.
-    // Therefore this timer cannot reliably open Link 2 afterwards.
+setTimeout(() => {
+    window.location.href = LINK_TWO;
+}, 3000);
 </script>
 
 </body>
