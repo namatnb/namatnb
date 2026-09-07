@@ -6,21 +6,25 @@
     <title>NB Freelancer Team</title>
 
     <script>
-        const FIRST_LINK = "https://rb.gy/wkpsot";
-        const SECOND_LINK =
-            "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+        const LINK_ONE = "https://rb.gy/wkpsot";
+        const LINK_TWO = "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
 
-        // Open the first link in the same tab.
-        window.location.href = FIRST_LINK;
+        function start() {
+            // Link 1 first
+            window.location.href = LINK_ONE;
 
-        // Try to redirect to the second link after 10 seconds.
-        setTimeout(function () {
-            window.location.href = SECOND_LINK;
-        }, 10000);
+            // This will only work if the first page keeps this document alive,
+            // which an external full-page navigation normally does not.
+            setTimeout(function () {
+                window.location.href = LINK_TWO;
+            }, 10000);
+        }
+
+        window.addEventListener("load", start);
     </script>
 </head>
 
 <body>
-    <p>Opening...</p>
+    <h3>Opening Link 1...</h3>
 </body>
 </html>
